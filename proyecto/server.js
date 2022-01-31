@@ -23,10 +23,15 @@ app.post('/saludo',function(peticion,respuesta){
     const mensaje = "Petición post. Hola, "+nombre
     return respuesta.send(mensaje)
 })
+
 app.post('/saludo_json',function(peticion,respuesta){
     const persona = peticion.body
     const mensaje = "Petición post. Hola, "+persona.nombre
-    return respuesta.send(mensaje)
+    const miRespuestaJSON = {
+        "saludo":mensaje,
+        "datos":persona
+    }
+    return respuesta.json(miRespuestaJSON)
 })
 
 app.listen(4000,function(){
