@@ -1,4 +1,5 @@
 const express = require('express')
+const query = require('./database')
 
 const app = express()
 
@@ -32,6 +33,35 @@ app.post('/saludo_json',function(peticion,respuesta){
         "datos":persona
     }
     return respuesta.json(miRespuestaJSON)
+})
+
+app.post('/registrar_usuario',async (request,response)=>{
+    const persona = request.body
+    try{
+        const results = await query('INSERT INTO users(??) VALUES(?)',[Object.keys(persona),Object.values(persona)])
+        return response.json(results)
+    }catch(error){
+        return response.json(error)
+    }
+})
+
+app.get('/mostrar_usuarios',async (request,response)=>{
+    //Otra forma de gestionar promesas
+    try{
+        const results = await query('SELECT * FROM users')
+        return response.json(results)
+    }catch(error){
+        return response.json(error)
+    }
+    
+    // query('SELECT * FROM users')
+    // .then((results)=>{
+    //     console.log(results)
+    //     return response.json(results)
+    // })
+    // .catch((error)=>{
+    //     return response.json(error)
+    // })
 })
 
 app.listen(4000,function(){
