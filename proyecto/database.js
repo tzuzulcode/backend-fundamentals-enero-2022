@@ -39,7 +39,27 @@ function query(sql,data){
     })
 }
 
-module.exports = query
+async function insert(tableName,data){
+    try{
+        await query(`INSERT INTO ${tableName}(??) VALUES(?)`,[Object.keys(data),Object.values(data)])
+        return data
+    }catch(error){
+        return error
+    }
+}
+
+//No podemos usar delete: palabra reservada
+async function del(tableName,data){
+    try{
+        await query(`DELETE FROM ${tableName} WHERE id=?`,[data])
+        return data
+    }catch(error){
+        return error
+    }
+}
+
+// Exportamos un objeto
+module.exports = {query,insert,del}
 
 // Una forma de gestionar instrucciones async:
 // query('SELECT * FROM users')

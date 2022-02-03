@@ -1,5 +1,7 @@
 const express = require('express')
-const query = require('./database')
+// Desestructurando el objeto que se exporta en database
+// Extraer los metodos del objeto database
+const database = require('./database')
 
 const app = express()
 
@@ -37,18 +39,29 @@ app.post('/saludo_json',function(peticion,respuesta){
 
 app.post('/registrar_usuario',async (request,response)=>{
     const persona = request.body
-    try{
-        const results = await query('INSERT INTO users(??) VALUES(?)',[Object.keys(persona),Object.values(persona)])
-        return response.json(results)
-    }catch(error){
-        return response.json(error)
-    }
+    const results = await database.insert('users',persona)
+    return response.json(results)
+})
+
+app.post('/eliminar_usuario',async (request,response)=>{
+    const persona = request.body.id
+    const results = await database.del('users',persona)
+
+    return response.json(results)
+})
+
+app.post('/editar_usuario',async (request,response)=>{
+    const id = request.body.id
+    const user = request.body.user
+    const results = await database.query("UPDATE users SET ? WHERE id=?",[user,id])
+
+    return response.json(results)
 })
 
 app.get('/mostrar_usuarios',async (request,response)=>{
     //Otra forma de gestionar promesas
     try{
-        const results = await query('SELECT * FROM users')
+        const results = await database.query('SELECT * FROM users')
         return response.json(results)
     }catch(error){
         return response.json(error)
