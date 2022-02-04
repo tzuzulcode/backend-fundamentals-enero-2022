@@ -1,4 +1,11 @@
 const express = require('express')
+const path = require("path")
+//const views = path.join(__dirname,'views/')
+
+function views(document){
+    return path.join(__dirname,"views",document)
+}
+
 // Desestructurando el objeto que se exporta en database
 // Extraer los metodos del objeto database
 const database = require('./database')
@@ -12,7 +19,28 @@ app.use(express.json()) // Cada vez que se haga uso de la app, se ejecute expres
 
 
 app.get('/',function(peticion,respuesta){
-    return respuesta.send("Pagina principal")
+    // return respuesta.send(`
+    //     <h1>Pagina principal</h1>
+    //     <img src="https://images.unsplash.com/photo-1643937583754-ee8aa3d5ccd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80">
+    // `)
+    //Ruta absoluta
+    //return respuesta.sendFile("/Users/tzuzul/Developer/BackEndFundamentalsEnero2022/proyecto/views/index.html")
+    
+    // console.log(__dirname)
+    // Podemos obtener el path
+    //return respuesta.sendFile(__dirname+'/views/index.html')
+    
+    // Podemos obtener el path con join
+    return respuesta.sendFile(views("index.html"))
+})
+
+app.get('/registro',function(request,response){
+    return response.sendFile(views("registro.html"))
+})
+app.post('/registro',function(request,response){
+    console.log(request.body)
+    // Nos lleva luego a la página principal
+    return response.redirect("/")
 })
 
 app.get('/saludo',function(peticion,respuesta){
