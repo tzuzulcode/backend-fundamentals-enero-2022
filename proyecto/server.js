@@ -14,8 +14,10 @@ const app = express()
 
 // Procesos intermedios
 // Middleware
+//Convirtiendo el body de la petición
 app.use(express.text()) // Cada vez que se haga uso de la app, se ejecute express.text()
 app.use(express.json()) // Cada vez que se haga uso de la app, se ejecute express.json()
+app.use(express.urlencoded({extended:true})) // Cada vez que se haga uso de la app, se ejecute express.urlencoded()
 
 
 app.get('/',function(peticion,respuesta){
@@ -37,8 +39,11 @@ app.get('/',function(peticion,respuesta){
 app.get('/registro',function(request,response){
     return response.sendFile(views("registro.html"))
 })
-app.post('/registro',function(request,response){
-    console.log(request.body)
+app.post('/registro',async function(request,response){
+    console.log(request.body) // {name: 'Tzuzul Code',email: 'mail@tzuzulcode.com',birthday: '2022-02-07'}
+    const persona = request.body
+    const results = await database.insert('users',persona)
+    console.log(results)
     // Nos lleva luego a la página principal
     return response.redirect("/")
 })
@@ -108,3 +113,7 @@ app.get('/mostrar_usuarios',async (request,response)=>{
 app.listen(4000,function(){
     console.log("Funcionando... http://localhost:4000")
 })
+
+// Edgar Montiel
+// Stiward
+// MVC
