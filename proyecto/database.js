@@ -8,23 +8,6 @@ const connection = mysql.createConnection({
     database:'BackEndFundamentalsEnero2022'
 })
 
-// connection.query('SELECT * FROM users',function(error,result){
-//     //Error first callback
-//     if(error){
-//         console.log(error.sqlMessage)
-//     }else{
-//         console.log(result)
-//     }
-// })
-// connection.query('SELECT * FROM compras',function(error,result){
-//     //Error first callback
-//     if(error){
-//         console.log(error.sqlMessage)
-//     }else{
-//         console.log(result)
-//     }
-// })
-
 // Encapsulando con promesas:
 function query(sql,data){
     return new Promise((resolve,reject)=>{
@@ -42,9 +25,9 @@ function query(sql,data){
 async function insert(tableName,data){
     try{
         await query(`INSERT INTO ${tableName}(??) VALUES(?)`,[Object.keys(data),Object.values(data)])
-        return data
+        return {data,success:true}
     }catch(error){
-        return error
+        return {error,success:false}
     }
 }
 
@@ -60,19 +43,3 @@ async function del(tableName,data){
 
 // Exportamos un objeto
 module.exports = {query,insert,del}
-
-// Una forma de gestionar instrucciones async:
-// query('SELECT * FROM users')
-// .then((results)=>{
-//     console.log(results)
-// })
-// .catch((error)=>{
-//     console.log(error)
-// })
-// query('SELECT * FROM compras')
-// .then((results)=>{
-//     console.log(results)
-// })
-// .catch((error)=>{
-//     console.log(error)
-// })
