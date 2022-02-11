@@ -5,6 +5,12 @@ class UserController{
         console.log(results)
         return results
     }
+
+    async readAll(){
+        const users = await database.query("SELECT * FROM users")
+
+        return users
+    }
 }
 
 module.exports = UserController

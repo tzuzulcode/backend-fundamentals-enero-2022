@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .user{
+            margin: 50px 20px;
+            background-color: aliceblue;
+            padding: 10px;
+            font-family: sans-serif;
+        }
+        .user img{
+            width: 50px;
+        }
+        .name{
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Users</h1>
+    <div id="users"></div>
+
+    <!-- Esto se ejecuta en el navegador -->
+    <script>
+        console.log("Hola mundo")
+        //Armando peticion
+        // Utilizando fetch
+        // fetch: Ir y traer algo
+        //fetch("http://localhost:4000/api/users") //Esto es valido
+        fetch("/api/users")
+        .then(function(respuesta){
+            //console.log(respuesta)
+            return respuesta.json()
+        })
+        .then(function(data){
+            //console.log(data) // Data es arreglo
+            var users = document.getElementById("users")
+            // users.innerHTML = `
+            //     <p>Hola</p>
+            //     <h3>mensaje...</h3>
+            // `
+            for(var user of data){
+                users.innerHTML = users.innerHTML + `<div class="user">
+                        <p class="name">${user.name}</p>
+                        <p>${user.email}</p>
+                        <img src="${user.profile_pic}">
+                    </div>`
+            }
+        })
+
+        // Hacer lo mismo, pero para mascotas
+    </script>
+</body>
+</html>
