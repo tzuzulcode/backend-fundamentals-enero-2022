@@ -36,5 +36,13 @@ router.get("/api/users",async (req,res)=>{
     var users = await userController.readAll()
     return res.json(users)
 })
-
+router.delete("/api/users/:id",async (req,res)=>{
+    const id = req.params.id
+    var user = await userController.delete(id)
+    return res.json(user)
+})
+// Una alternativa mejor es usar el metodo static de express:
+// router.get("/js/users.js",(req,res)=>{
+//     return res.sendFile(path.join(__dirname,"../","static","js","users.js"))
+// })
 module.exports = router

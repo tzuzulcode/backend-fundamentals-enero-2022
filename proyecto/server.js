@@ -13,6 +13,8 @@ const app = express()
 
 // Procesos intermedios
 // Middleware
+//Definieno carpeta de arhivos estáticos
+app.use(express.static(path.join(__dirname,"static")))
 //Convirtiendo el body de la petición
 app.use(express.text()) // Cada vez que se haga uso de la app, se ejecute express.text()
 app.use(express.json()) // Cada vez que se haga uso de la app, se ejecute express.json()

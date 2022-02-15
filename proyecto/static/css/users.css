@@ -1,0 +1,13 @@
+.user{
+    margin: 50px 20px;
+    background-color: aliceblue;
+    padding: 10px;
+    font-family: sans-serif;
+}
+.user img{
+    width: 50px;
+}
+.name{
+    font-weight: bold;
+    font-size: 20px;
+}
