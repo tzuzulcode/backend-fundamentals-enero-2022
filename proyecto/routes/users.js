@@ -39,7 +39,8 @@ router.get("/api/users",async (req,res)=>{
 router.delete("/api/users/:id",async (req,res)=>{
     const id = req.params.id
     var user = await userController.delete(id)
-    return res.json(user)
+    var users = await userController.readAll()
+    return res.json(users)
 })
 // Una alternativa mejor es usar el metodo static de express:
 // router.get("/js/users.js",(req,res)=>{
