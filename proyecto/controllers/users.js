@@ -6,10 +6,21 @@ class UserController{
         return results
     }
 
+    async read(id){
+        const user = await database.query("SELECT * FROM users where id=?",[id])
+
+        return user[0]
+    }
+
     async readAll(){
         const users = await database.query("SELECT * FROM users")
 
         return users
+    }
+
+    async edit(id,data){
+        const user = await database.query("UPDATE users SET ? WHERE id=?",[data,id])
+        return user
     }
 
     async delete(id){

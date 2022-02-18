@@ -32,9 +32,28 @@ router.post('/registro',async function(request,response){
 router.get("/users",(req,res)=>{
     return res.sendFile(views("users.html"))
 })
+router.get("/editUser/:id",(req,res)=>{
+    return res.sendFile(views("editUser.html"))
+})
 router.get("/api/users",async (req,res)=>{
     var users = await userController.readAll()
     return res.json(users)
+})
+router.get("/api/users/:id",async (req,res)=>{
+    const id = req.params.id
+    var user = await userController.read(id)
+    return res.json(user)
+})
+router.delete("/api/users/:id",async (req,res)=>{
+    const id = req.params.id
+    var user = await userController.delete(id)
+    var users = await userController.readAll()
+    return res.json(users)
+})
+router.post("/api/editUser/:id",async (req,res)=>{
+    const id = req.params.id
+    var user = await userController.edit(id,req.body)
+    return res.redirect("/")
 })
 router.delete("/api/users/:id",async (req,res)=>{
     const id = req.params.id

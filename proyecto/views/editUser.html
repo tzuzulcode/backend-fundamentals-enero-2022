@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="formulario" method="POST">
+        <input type="text" name="name">
+        <input type="email" name="email">
+        <input type="date" name="birthday">
+        <button>Enviar</button>
+    </form>
+
+    <script>
+        const idUser = window.location.pathname.split("/")[2]
+
+        const formulario = document.getElementById("formulario")
+        fetch("/api/users/"+idUser)
+        .then((res)=>{
+            return res.json()
+        })
+        .then((data)=>{
+            console.log(data)
+            formulario.action ="/api/editUser/"+idUser
+            formulario.name.value = data.name
+            formulario.email.value = data.email
+            formulario.birthday.value = data.birthday
+        })
+    </script>
+</body>
+</html>

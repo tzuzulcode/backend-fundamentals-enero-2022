@@ -34,6 +34,7 @@ function renderUsers(){
                 <p>${user.email}</p>
                 <img src="${user.profile_pic}">
                 <button onClick="eliminar(${user.id})">Eliminar</button>
+                <a href="/editUser/${user.id}">Editar</a>
             </div>`
     }
 }
