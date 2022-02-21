@@ -30,7 +30,7 @@ router.post('/registro',async function(request,response){
 })
 
 router.get("/users",(req,res)=>{
-    return res.sendFile(views("users.html"))
+    return res.render("users")
 })
 router.get("/editUser/:id",(req,res)=>{
     return res.sendFile(views("editUser.html"))

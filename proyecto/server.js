@@ -11,6 +11,11 @@ function views(document){
 
 const app = express()
 
+//Utilizando template engines
+
+app.set("view engine",'pug')
+app.set("views","views")
+
 // Procesos intermedios
 // Middleware
 //Definieno carpeta de arhivos estáticos

@@ -24,10 +24,23 @@
         })
         .then((data)=>{
             console.log(data)
+
+            const date = new Date(data.birthday)
+            const day = date.toLocaleDateString(undefined,{
+                day:"2-digit"
+            })
+            const month = date.toLocaleDateString(undefined,{
+                month:"2-digit"
+            })
+            const year = date.toLocaleDateString(undefined,{
+                year:"numeric"
+            })
+
+            console.log(day,month,year)
             formulario.action ="/api/editUser/"+idUser
             formulario.name.value = data.name
             formulario.email.value = data.email
-            formulario.birthday.value = data.birthday
+            formulario.birthday.value = `${year}-${month}-${day}`
         })
     </script>
 </body>
