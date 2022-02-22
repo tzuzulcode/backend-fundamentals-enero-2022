@@ -29,8 +29,12 @@ router.post('/registro',async function(request,response){
     }
 })
 
+router.get("/usersPug",async (req,res)=>{
+    var users = await userController.readAll()
+    return res.render("users",{usuarios:users,title:"Usuarios"})
+})
 router.get("/users",(req,res)=>{
-    return res.render("users")
+    return res.sendFile(views("users.html"))
 })
 router.get("/editUser/:id",(req,res)=>{
     return res.sendFile(views("editUser.html"))

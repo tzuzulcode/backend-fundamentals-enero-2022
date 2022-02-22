@@ -4,6 +4,23 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
+        title #{title}
+        link(rel="stylesheet",href="/css/users.css")
     body 
-        p Hola
+        h1 Users
+        div#users
+
+        div
+            each user in usuarios
+                div.user
+                    p.name #{user.name}
+                    p #{user.email}
+                    img(src=user.profile_pic, alt=user.name)
+                    button(onclick="eliminar("+user.id+")") Eliminar #{user.id}
+                    a(href="/editUser/"+user.id) Editar usuario
+        //- ul
+        //-     li Elemento 1
+        //-     li elemento 2
+        //-     li elemento 3
+
+        script(src="/js/usersPug.js")
