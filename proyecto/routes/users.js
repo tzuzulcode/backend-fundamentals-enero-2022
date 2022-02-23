@@ -14,7 +14,8 @@ const userController = new UserController()
 //router.use('/users')
 
 router.get('/registro',function(request,response){
-    return response.sendFile(views("registro.html"))
+    //return response.sendFile(views("registro.html"))
+    return response.render("registro",{title:"Registro de usuarios"})
 })
 
 router.post('/registro',async function(request,response){
@@ -23,9 +24,9 @@ router.post('/registro',async function(request,response){
     const user = await userController.create(persona)
     // Nos lleva luego a la página principal
     if(user.success){
-        return response.redirect("/")
+        return response.redirect("/users")
     }else{
-        return response.redirect("/registro")
+        return response.render("registro",{title:"Error en el registro",error:true,message:user.error,data:persona})
     }
 })
 

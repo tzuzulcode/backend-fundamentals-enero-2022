@@ -1,0 +1,19 @@
+extends layouts/main-layout.pug
+
+block styles
+
+  link(rel="stylesheet", href="/css/registro.css")
+
+block content
+
+  h1 Registro
+
+  form#formulario(method='POST' action='/registro')
+    input(type='text' name='name' value=data?data.name:"")
+    input(type='email' name='email' value=data?data.email:"")
+    input(type='date' name='birthday' value=data?data.birthday:"")
+    input(type='text' name='profile_pic' value=data?data.profile_pic:"")
+    button Enviar
+
+  if error
+    p.error #{message}
