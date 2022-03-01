@@ -1,8 +1,10 @@
 const express = require("express")
 const { port } = require("./config")
-const {query} = require("./config/database")
 const {engine} = require("express-handlebars")
 const { DateTime } = require("luxon");
+
+//Importando rutas
+const userRouter = require("./routes/users")
 
 // engine.registerHelper("formatDate",(date)=>{
 //     return DateTime.fromISO(date)
@@ -38,15 +40,7 @@ app.engine('hbs',engine({
 app.set("view engine",'hbs')
 app.set("views","views")
 
-app.get("/",async (req,res)=>{
-    const del = await query("DELETE FROM users")
-    const users = await query("SELECT * FROM users")
-    return res.render("home",{
-        username:"tzuzulcode",
-        users,
-        hasUsers:users.length > 0
-    })
-})
+app.use(userRouter)
 
 app.listen(port,function(){
     console.log("Funcionando... http://localhost:"+port)
