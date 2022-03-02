@@ -1,3 +1,4 @@
+const path = require("path")
 const express = require("express")
 const { port } = require("./config")
 const {engine} = require("express-handlebars")
@@ -5,6 +6,7 @@ const { DateTime } = require("luxon");
 
 //Importando rutas
 const userRouter = require("./routes/users")
+const authRouter = require("./routes/auth")
 
 // engine.registerHelper("formatDate",(date)=>{
 //     return DateTime.fromISO(date)
@@ -24,11 +26,12 @@ const app = express()
 //     }
 // })
 
+app.use(express.static(path.join(__dirname,"static")))
 
 app.engine('hbs',engine({
-    defaultLayout:null,
     extname:"hbs",
-    // layoutsDir:"templates"
+    // layoutsDir:"templates",
+    partialsDir:path.join(__dirname,"views","components"),
     helpers:{
         formatDate:function(date){
             const newDate = new DateTime(date)
@@ -41,6 +44,7 @@ app.set("view engine",'hbs')
 app.set("views","views")
 
 app.use(userRouter)
+app.use(authRouter)
 
 app.listen(port,function(){
     console.log("Funcionando... http://localhost:"+port)

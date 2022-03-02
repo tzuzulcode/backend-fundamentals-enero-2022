@@ -1,6 +1,7 @@
 const {query,insert} = require("../config/database")
 
 class User{
+    #idUser
     constructor(firstName,lastName,username,email,birthday,profilePic,idUser){
         this.firstName = firstName
         this.lastName = lastName
@@ -8,17 +9,17 @@ class User{
         this.email = email
         this.birthday = birthday
         this.profilePic = profilePic
-        this.idUser=idUser
+        this.#idUser=idUser
     }
 
-    //TODO: Metodo estatico
-    async readAll(){
+    //El metodo puede ser utilizado sin crear una instancia
+    static async readAll(){
         return await query("SELECT * FROM users")
     }
 
     async save(){
         const newUser = await insert("users",this)
-        this.idUser = newUser
+        this.#idUser = newUser
     }
 
     async update(newUser){

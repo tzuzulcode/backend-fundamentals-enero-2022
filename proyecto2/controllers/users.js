@@ -1,5 +1,4 @@
 const User = require("../models/User")
-const userModel = new User()
 
 class UserController{
 
@@ -9,10 +8,11 @@ class UserController{
     // }
 
     async getUsersView(req,res){
-        const data = await userModel.readAll()
+        const data = await User.readAll()
+        console.log(data)
         return res.render("home",{
             username:"tzuzulcode",
-            data,
+            users:data,
             hasUsers:data.length > 0
         })
     }
