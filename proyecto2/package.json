@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon server.js"
+    "css":"npx tailwindcss -i ./static/css/tailwindBase.css -o ./static/css/styles.css --watch",
+    "start-dev":"npx nodemon server.js",
+    "dev": "npm-run-all -p -r css start-dev"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.0.23"
   }
 }

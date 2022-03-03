@@ -4,9 +4,9 @@
 {{#if hasUsers }}
 <ul>
     {{#each users}}
-    <li>{{this.name}} {{formatDate this.birthday}}</li>
+    <li class="text-green-700">{{this.name}} {{formatDate this.birthday}}</li>
     {{/each}}
 </ul>
 {{else}}
-<p>Ningun usuario registrado</p>
+<p class="text-red-500">Ningun usuario registrado</p>
 {{/if}}

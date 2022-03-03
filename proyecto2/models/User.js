@@ -2,14 +2,14 @@ const {query,insert} = require("../config/database")
 
 class User{
     #idUser
-    constructor(firstName,lastName,username,email,birthday,profilePic,idUser){
-        this.firstName = firstName
-        this.lastName = lastName
-        this.username = username
-        this.email = email
-        this.birthday = birthday
-        this.profilePic = profilePic
-        this.#idUser=idUser
+    constructor(user){
+        this.firstName = user.firstName
+        this.lastName = user.lastName
+        this.username = user.username
+        this.email = user.email
+        this.birthday = user.birthday
+        this.profilePic = user.profilePic
+        this.password = user.password
     }
 
     //El metodo puede ser utilizado sin crear una instancia

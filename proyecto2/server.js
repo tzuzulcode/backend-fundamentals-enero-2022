@@ -28,6 +28,9 @@ const app = express()
 
 app.use(express.static(path.join(__dirname,"static")))
 
+//Middleware
+app.use(express.urlencoded({extended:true})) // Transforma de x-www-form-urlencoded a Object de JS
+
 app.engine('hbs',engine({
     extname:"hbs",
     // layoutsDir:"templates",
