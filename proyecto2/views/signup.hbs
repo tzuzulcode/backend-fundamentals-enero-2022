@@ -1,8 +1,23 @@
 <form action="/signup" method="post">
     {{!-- name: es el nombre de la propiedad cuando recibamos el formulario --}}
     {{!-- type: indica el tipo de formulario --}}
-    <input type="text" name="name" placeholder="Name..." required>
-    <input type="email" name="email" placeholder="Email..." required>
+    <input type="text" name="name" placeholder="Name..." value="{{user.name}}" required>
+    <input type="email" name="email" placeholder="Email..." value="{{user.email}}" required>
+    <input type="text" name="username" placeholder="Username..." value="{{user.username}}" required>
+    <input type="date" name="birthday" placeholder="Birthday..." value="{{user.birthday}}" required>
+    <input type="text" name="profilePic" placeholder="Profile pic..." value="{{user.profilePic}}" required>
     <input type="password" name="password" placeholder="Password..." required>
+    <input type="password" name="passwordRepeated" placeholder="Repeat password..." required>
     <button>Enviar</button>
+
+    {{#unless validation.success}}
+        <ul>
+        {{#each validation.errors}}
+            <li class="text-red-700">
+                {{this}}
+            </li>
+        {{/each}}
+        </ul>
+    {{/unless}}
+
 </form>

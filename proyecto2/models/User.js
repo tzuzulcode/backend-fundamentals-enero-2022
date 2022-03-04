@@ -1,15 +1,15 @@
 const {query,insert} = require("../config/database")
 
 class User{
-    #idUser
+    idUser
     constructor(user){
-        this.firstName = user.firstName
-        this.lastName = user.lastName
+        this.name = user.name
         this.username = user.username
         this.email = user.email
         this.birthday = user.birthday
         this.profilePic = user.profilePic
         this.password = user.password
+        this.passwordRepeated = user.passwordRepeated
     }
 
     //El metodo puede ser utilizado sin crear una instancia
@@ -18,8 +18,15 @@ class User{
     }
 
     async save(){
-        const newUser = await insert("users",this)
-        this.#idUser = newUser
+        const newUser = await insert("users",{
+            name:this.name,
+            email:this.email,
+            username:this.username,
+            birthday:this.birthday,
+            profile_pic:this.profilePic,
+            password:this.password
+        })
+        this.idUser = newUser
     }
 
     async update(newUser){
@@ -28,6 +35,20 @@ class User{
 
     async delete(){
         await query("DELETE FROM users WHERE idUser = ?",[this.idUser])
+    }
+
+
+    validate(){
+        let result = {sucess:true,errors:[]}
+        if(!(this.name && this.username && this.email && this.password && this.passwordRepeated)){
+            result.sucess = false
+            result.errors.push("Rellena todos los campos")
+        }
+        if(this.password!==this.passwordRepeated){
+            result.sucess = false
+            result.errors.push("Las contraseñas no coinciden")
+        }
+        return result
     }
 
 

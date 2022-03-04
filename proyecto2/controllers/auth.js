@@ -9,7 +9,7 @@ class AuthController{
         return res.render("signup",{formCSS:true})
     }
 
-    signUp(req,res){
+    async signUp(req,res){
         // req.body:
         // {
         //     username:"tzuzulcode",
@@ -18,9 +18,14 @@ class AuthController{
         // }
 
         const newUser = new User(req.body)
-        console.log(newUser)
-
-        return res.redirect("/")
+        const validation = newUser.validate()
+        console.log(validation)
+        if(validation.sucess){
+            await newUser.save()
+            return res.redirect("/")
+        }
+        
+        return res.render("signup",{validation,user:newUser})
     }
 }
 

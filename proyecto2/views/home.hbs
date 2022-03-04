@@ -4,7 +4,12 @@
 {{#if hasUsers }}
 <ul>
     {{#each users}}
-    <li class="text-green-700">{{this.name}} {{formatDate this.birthday}}</li>
+    <li class="text-green-700">
+        <div>
+            <img src="{{this.profile_pic}}">
+            <p>{{this.name}} {{formatDate this.birthday}}</p>
+        </div>
+    </li>
     {{/each}}
 </ul>
 {{else}}
