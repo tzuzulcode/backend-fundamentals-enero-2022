@@ -26,7 +26,9 @@ class User{
             profile_pic:this.profilePic,
             password:this.password
         })
-        this.idUser = newUser
+        this.idUser = newUser.id
+
+        return newUser
     }
 
     async update(newUser){
@@ -39,13 +41,13 @@ class User{
 
 
     validate(){
-        let result = {sucess:true,errors:[]}
+        let result = {success:true,errors:[]}
         if(!(this.name && this.username && this.email && this.password && this.passwordRepeated)){
-            result.sucess = false
+            result.success = false
             result.errors.push("Rellena todos los campos")
         }
         if(this.password!==this.passwordRepeated){
-            result.sucess = false
+            result.success = false
             result.errors.push("Las contraseñas no coinciden")
         }
         return result

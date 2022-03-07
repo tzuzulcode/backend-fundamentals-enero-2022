@@ -15,6 +15,15 @@ function query(sql,data){
         connection.query(sql,data,function(error,result){
             //Error first callback
             if(error){
+                if(error.errno===1062){
+                    const errorData = error.sqlMessage.split("'")
+                    const value = errorData[1]
+                    //TODO:Regular expressions
+                    const field = errorData[3].split(".")[1].split("_")[0]
+
+                    const message = `El ${field} '${value}' ya esta en uso`
+                    reject(message)
+                }
                 reject(error.sqlMessage)
             }else{
                 resolve(result)
@@ -27,7 +36,7 @@ async function insert(tableName,data){
     try{
         const result = await query(`INSERT INTO ${tableName}(??) VALUES(?)`,[Object.keys(data),Object.values(data)])
         console.log(result)
-        return result.insertId
+        return {success:true,id:result.insertId}
     }catch(error){
         return {error,success:false}
     }

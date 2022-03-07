@@ -19,10 +19,16 @@ class AuthController{
 
         const newUser = new User(req.body)
         const validation = newUser.validate()
-        console.log(validation)
-        if(validation.sucess){
-            await newUser.save()
-            return res.redirect("/")
+        if(validation.success){
+            const userSaved = await newUser.save()
+            console.log(userSaved)
+            if(userSaved.success){
+                return res.redirect("/")
+            }else{
+                validation.errors = [userSaved.error]
+                validation.success = false
+                //No se puede porque es const: validation = {success:true,errors:["El correo electrónico ya esta en uso"]}
+            }
         }
         
         return res.render("signup",{validation,user:newUser})
