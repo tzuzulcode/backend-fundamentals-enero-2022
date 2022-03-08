@@ -9,6 +9,22 @@ class AuthController{
         return res.render("signup",{formCSS:true})
     }
 
+    async logIn(req,res){
+        const credenciales = req.body
+        const userData = await User.getByEmail(credenciales.email)
+        if(userData.length === 0){
+            return res.render("login",{validation:{
+                errors:["Usuario no registrado"]
+            }})
+        }
+        if(userData[0].password!==credenciales.password){
+            return res.render("login",{validation:{
+                errors:["Credenciales icorrectas"]
+            }})
+        }
+        return res.redirect("/")
+    }
+
     async signUp(req,res){
         // req.body:
         // {

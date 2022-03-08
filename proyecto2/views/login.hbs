@@ -1,7 +1,20 @@
-<form action="" method="post">
-    {{!-- name: es el nombre de la propiedad cuando recibamos el formulario --}}
-    {{!-- type: indica el tipo de formulario --}}
-    <input type="email" name="email" placeholder="Email..." required>
-    <input type="password" name="password" placeholder="Password..." required>
-    <button>Enviar</button>
-</form>
+<main class="flex justify-center mt-20">
+    <form class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5" action="/login" method="post">
+        {{!-- name: es el nombre de la propiedad cuando recibamos el formulario --}}
+        {{!-- type: indica el tipo de formulario --}}
+        <input class="p-2" type="email" name="email" placeholder="Email..." value="{{user.email}}" required>
+        <input class="p-2" type="password" name="password" placeholder="Password..." required>
+        <button class="bg-blue-200 p-2 hover:bg-yellow-200">Iniciar sesión</button>
+
+        {{#unless validation.success}}
+            <ul>
+            {{#each validation.errors}}
+                <li class="text-red-700">
+                    {{this}}
+                </li>
+            {{/each}}
+            </ul>
+        {{/unless}}
+
+    </form>
+</main>

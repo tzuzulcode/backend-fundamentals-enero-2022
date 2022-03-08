@@ -39,6 +39,10 @@ class User{
         await query("DELETE FROM users WHERE idUser = ?",[this.idUser])
     }
 
+    static async getByEmail(email){
+        return await query("SELECT * FROM users WHERE email=?",[email])
+    }
+
 
     validate(){
         let result = {success:true,errors:[]}

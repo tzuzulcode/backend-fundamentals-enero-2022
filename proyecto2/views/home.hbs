@@ -1,14 +1,16 @@
 <h1>Bienvenido</h1>
-<p>{{username}}</p>
 
 {{#if hasUsers }}
-<ul>
+<ul class="p-5">
     {{#each users}}
-    <li class="text-green-700">
-        <div>
-            <img src="{{this.profile_pic}}">
-            <p>{{this.name}} {{formatDate this.birthday}}</p>
-            <p>{{this.username}} {{this.email}}</p>
+    <li class="bg-gray-100 p-2 mt-5">
+        <div class="flex items-center gap-5">
+            <img class="w-16 h-16 rounded-full" src="{{this.profile_pic}}">
+            <div>
+                <p class="font-bold text-lg">{{this.name}}</p>
+                <p>{{formatDate this.birthday}}</p>
+                <p>{{this.username}} {{this.email}}</p>
+            </div>
         </div>
     </li>
     {{/each}}
