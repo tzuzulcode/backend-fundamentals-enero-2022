@@ -2,6 +2,7 @@ const User = require("../models/User")
 
 class AuthController{
     getLoginView(req,res){
+        console.log(req.session)
         return res.render("login",{formCSS:true})
     }
 
@@ -22,6 +23,8 @@ class AuthController{
                 errors:["Credenciales icorrectas"]
             }})
         }
+        //return res.setHeader("Set-Cookie","loggedIn=true").redirect("/")
+        req.session.loggedIn = true
         return res.redirect("/")
     }
 

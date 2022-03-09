@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "css":"npx tailwindcss -i ./static/css/tailwindBase.css -o ./static/css/styles.css --watch",
-    "start-dev":"npx nodemon server.js",
+    "css": "npx tailwindcss -i ./static/css/tailwindBase.css -o ./static/css/styles.css --watch",
+    "start-dev": "npx nodemon server.js",
     "dev": "npm-run-all -p -r css start-dev"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.2",
     "luxon": "^2.3.1",
     "mysql2": "^2.3.3"
   },
