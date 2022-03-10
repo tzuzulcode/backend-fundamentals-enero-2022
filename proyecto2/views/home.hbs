@@ -1,4 +1,8 @@
-<h1>Bienvenido</h1>
+{{#if session.loggedIn}}
+    <h1>Bienvenido {{session.username}}</h1>
+{{else}}
+    <h1>Inicia o registrate</h1>
+{{/if}}
 
 {{#if hasUsers }}
 <ul class="p-5">

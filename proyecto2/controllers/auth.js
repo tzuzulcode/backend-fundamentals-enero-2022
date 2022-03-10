@@ -2,12 +2,16 @@ const User = require("../models/User")
 
 class AuthController{
     getLoginView(req,res){
-        console.log(req.session)
         return res.render("login",{formCSS:true})
     }
 
     getSignUpView(req,res){
         return res.render("signup",{formCSS:true})
+    }
+
+    logOut(req,res){
+        req.session.destroy()
+        return res.redirect("/")
     }
 
     async logIn(req,res){
@@ -25,6 +29,8 @@ class AuthController{
         }
         //return res.setHeader("Set-Cookie","loggedIn=true").redirect("/")
         req.session.loggedIn = true
+        req.session.username = userData[0].username
+        req.session.idUser = userData[0].id
         return res.redirect("/")
     }
 

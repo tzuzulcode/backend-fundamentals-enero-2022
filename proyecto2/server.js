@@ -7,7 +7,8 @@ const session = require("express-session")
 
 //Importando rutas
 const userRouter = require("./routes/users")
-const authRouter = require("./routes/auth")
+const authRouter = require("./routes/auth");
+const addSessionToTemplate = require("./middleware/addSessionToTemplate");
 
 // engine.registerHelper("formatDate",(date)=>{
 //     return DateTime.fromISO(date)
@@ -36,6 +37,8 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }))
+
+app.use(addSessionToTemplate)
 
 app.engine('hbs',engine({
     extname:"hbs",

@@ -2,7 +2,11 @@
     <ul class="flex gap-10">
         <li><a href="/">Home</a></li>
         <li><a href="/signup">Sign up</a></li>
-        <li><a href="/login">Log in</a></li>
+        {{#if session.loggedIn}}
+            <li><a href="/logout">Log out</a></li>
+        {{else}}
+            <li><a href="/login">Log in</a></li>
+        {{/if}}
         <li><a href="#">Link 1</a></li>
         <li><a href="#">Link 1</a></li>
         <li><a href="#">Link 1</a></li>
