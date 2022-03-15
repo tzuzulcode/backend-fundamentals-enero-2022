@@ -9,6 +9,8 @@ const userController = new UserController()
 
 // No funciona, si utilizamos this dentro de la funcion getUserView:
 router.get("/",userController.getUsersView)
+router.get("/addFriend/:idFriend",userController.addFriend)
+
 
 //Esto funciona:
 // router.get("/",(req,res)=>{

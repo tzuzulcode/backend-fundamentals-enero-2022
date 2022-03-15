@@ -16,6 +16,12 @@ class User{
     static async readAll(){
         return await query("SELECT * FROM users")
     }
+    static async addFriend(idFriend1,idFriend2){
+        return await query("INSERT INTO friendship(idFriend,idFriend2) VALUES(?,?)",[idFriend1,idFriend2])
+    }
+    static async getFriendRequest(idUser){
+        return await query("SELECT name,profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend WHERE idFriend2 = ? AND status=0;",[idUser])
+    }
 
     async save(){
         const newUser = await insert("users",{
