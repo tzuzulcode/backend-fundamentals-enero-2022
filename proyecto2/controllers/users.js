@@ -8,12 +8,26 @@ class UserController{
     // }
 
     async getUsersView(req,res){
-        const data = await User.readAll()
-        let resData = {
-            users:data,
-            hasUsers:data.length > 0,
-            loggedIn:req.session.loggedIn
+        let resData
+        if(req.session.loggedIn){
+            const resultado = await User.readFilteredUser(req.session.idUser)
+            resData = {
+                users:resultado.people,
+                hasUsers:resultado.people.length > 0,
+                friends:resultado.friends,
+                hasFriends:resultado.friends.length>0,
+                loggedIn:req.session.loggedIn
+            }
+        }else{
+            let data = await User.readAll()
+            resData = {
+                users:data,
+                hasUsers:data.length > 0,
+                hasFriends:false,
+                loggedIn:false
+            }
         }
+         
         if(req.session.loggedIn){
             const friendRequests   = await User.getFriendRequest(req.session.idUser)
             resData.friendRequests = friendRequests

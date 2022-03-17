@@ -19,21 +19,45 @@
     {{else}}
     <p class="text-red-500">Ninguna solicitud de amistad</p>
     {{/if}}
+
+    <h2 class="p-5 text-3xl font-bold mt-10">Amigos o solicitudes enviadas</h2>
+    {{#if hasFriends }}
+    <ul class="px-5">
+        {{#each friends}}
+        <li class="bg-gray-100 p-5 mt-5">
+            <div class="flex items-center gap-5">
+                <img class="w-16 h-16 rounded-full" src="{{this.profile_pic}}">
+                <div>
+                    <p class="font-bold text-lg">{{this.name}}</p>
+                    <p>{{formatDate this.birthday}} {{formatHour this.birthday}}</p>
+                    <p>{{this.username}} {{this.email}}</p>
+                </div>
+                {{#if ../session.loggedIn}}
+                <a href="/addFriend/{{this.id}}" class="ml-auto">Agregar</a>
+                {{/if}}
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p class="text-red-500">Ninguna solicitud de amistad enviada</p>
+    {{/if}}
 {{else}}
     <h1>Inicia o registrate</h1>
 {{/if}}
 
 
 
+<h2 class="p-5 text-3xl font-bold mt-10">Mas personas...</h2>
 {{#if hasUsers }}
-<ul class="p-5">
+<ul class="px-5">
     {{#each users}}
     <li class="bg-gray-100 p-5 mt-5">
         <div class="flex items-center gap-5">
             <img class="w-16 h-16 rounded-full" src="{{this.profile_pic}}">
             <div>
                 <p class="font-bold text-lg">{{this.name}}</p>
-                <p>{{formatDate this.birthday}}</p>
+                <p>{{formatDate this.birthday}} {{formatHour this.birthday}}</p>
                 <p>{{this.username}} {{this.email}}</p>
             </div>
             {{#if ../session.loggedIn}}

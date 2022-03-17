@@ -16,6 +16,22 @@ class User{
     static async readAll(){
         return await query("SELECT * FROM users")
     }
+
+    //Hacer un filtro de los usuarios para retirar a nosotros
+    //
+    static async readFilteredUser(idUser){
+        //
+        //SELECT * FROM users WHERE id != 77 AND id NOT IN (SELECT users.id FROM users JOIN friendship ON users.id=friendship.idFriend2);
+
+        const friends = await query("SELECT * FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend=?",[idUser])
+
+        const people = await query("SELECT * FROM users WHERE id != ? AND id NOT IN (SELECT users.id FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend=?)",[idUser,idUser])
+
+        console.log(friends)
+        console.log(people)
+
+        return {friends,people}
+    }
     static async addFriend(idFriend1,idFriend2){
         return await query("INSERT INTO friendship(idFriend,idFriend2) VALUES(?,?)",[idFriend1,idFriend2])
     }

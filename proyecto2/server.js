@@ -2,7 +2,7 @@ const path = require("path")
 const express = require("express")
 const { port, secret } = require("./config")
 const {engine} = require("express-handlebars")
-const { DateTime } = require("luxon");
+const { DateTime,Interval } = require("luxon");
 const session = require("express-session")
 
 //Importando rutas
@@ -46,8 +46,20 @@ app.engine('hbs',engine({
     partialsDir:path.join(__dirname,"views","components"),
     helpers:{
         formatDate:function(date){
-            const newDate = new DateTime(date)
+            const newDate = DateTime.fromJSDate(date)
             return newDate.toFormat("yyyy-MM-dd")
+        },
+        formatHour:function(date){
+            const newDate = DateTime.fromJSDate(date)
+
+            const diff = newDate.diffNow(["minutes","hours","days"]).toObject()
+            if(diff.days<0){
+                return `Hace ${-1*diff.days} días`
+            }else if(diff.hours<0){
+                return `Hace ${-1*diff.hours} horas`
+            }else if(diff.minutes<0){
+                return `Hace ${Number.parseInt(-1*diff.minutes)} minutos`
+            }
         }
     }
 }))
