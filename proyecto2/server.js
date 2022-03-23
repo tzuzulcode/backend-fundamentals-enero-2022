@@ -45,6 +45,9 @@ app.engine('hbs',engine({
     // layoutsDir:"templates",
     partialsDir:path.join(__dirname,"views","components"),
     helpers:{
+        toBoolean:function(number){
+            return number==1
+        },
         formatDate:function(date){
             const newDate = DateTime.fromJSDate(date)
             return newDate.toFormat("yyyy-MM-dd")

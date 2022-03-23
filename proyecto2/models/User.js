@@ -35,8 +35,14 @@ class User{
     static async addFriend(idFriend1,idFriend2){
         return await query("INSERT INTO friendship(idFriend,idFriend2) VALUES(?,?)",[idFriend1,idFriend2])
     }
+
+    static async acceptFriend(sender,me){
+        await query("UPDATE friendship SET status=true WHERE idFriend=? AND idFriend2=?",[sender,me])
+        return await query("INSERT INTO friendship(idFriend,idFriend2,status) VALUES(?,?,true)",[me,sender])
+    }
+
     static async getFriendRequest(idUser){
-        return await query("SELECT name,profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend WHERE idFriend2 = ? AND status=0;",[idUser])
+        return await query("SELECT users.id AS id,name,profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend WHERE idFriend2 = ? AND status=0;",[idUser])
     }
 
     async save(){

@@ -30,6 +30,8 @@ class UserController{
          
         if(req.session.loggedIn){
             const friendRequests   = await User.getFriendRequest(req.session.idUser)
+
+            console.log(friendRequests)
             resData.friendRequests = friendRequests
             resData.hasFriendRequests = friendRequests.length>0
         }
@@ -52,6 +54,12 @@ class UserController{
 
         await User.addFriend(req.session.idUser,idFriend)
 
+        res.redirect("/")
+    }
+
+    async acceptFriend(req,res){
+        const idFriend = req.params.idFriend
+        await User.acceptFriend(idFriend,req.session.idUser)
         res.redirect("/")
     }
 }

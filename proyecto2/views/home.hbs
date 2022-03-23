@@ -1,6 +1,6 @@
 {{#if session.loggedIn}}
-    <h1>Bienvenido {{session.username}}</h1>
-    <h2>Solicitudes de amistad</h2>
+    <h1 class="p-5 text-5xl font-bold mt-10">Bienvenido <span class=" text-amber-300">{{session.username}}</span></h1>
+    <h2 class="p-5 text-3xl font-bold mt-10">Solicitudes de amistad</h2>
     {{!-- {{log hasFriendRequests}} --}}
     {{#if hasFriendRequests }}
     <ul class="p-5">
@@ -12,6 +12,7 @@
                     <p class="font-bold text-lg">{{this.name}}</p>
                     <p>{{this.username}}</p>
                 </div>
+                <a href="/acceptFriend/{{this.id}}" class="ml-auto py-2 px-7 bg-yellow-300 hover:bg-yellow-200 rounded-md">Aceptar</a>
             </div>
         </li>
         {{/each}}
@@ -32,8 +33,10 @@
                     <p>{{formatDate this.birthday}} {{formatHour this.birthday}}</p>
                     <p>{{this.username}} {{this.email}}</p>
                 </div>
-                {{#if ../session.loggedIn}}
-                <a href="/addFriend/{{this.id}}" class="ml-auto">Agregar</a>
+                {{#if (toBoolean this.status)}}
+                <p class="ml-auto bg-gray-300 p-2 rounded-md">Ya son amigos</p>
+                {{else}}
+                <p class="ml-auto bg-gray-300 p-2 rounded-md">Por responder...</p>
                 {{/if}}
             </div>
         </li>
@@ -61,7 +64,7 @@
                 <p>{{this.username}} {{this.email}}</p>
             </div>
             {{#if ../session.loggedIn}}
-            <a href="/addFriend/{{this.id}}" class="ml-auto">Agregar</a>
+            <a href="/addFriend/{{this.id}}" class="ml-auto py-2 px-7 bg-blue-500 hover:bg-blue-400 text-white rounded-md">Agregar</a>
             {{/if}}
         </div>
     </li>
