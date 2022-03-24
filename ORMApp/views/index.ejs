@@ -1,0 +1,16 @@
+<h1 class=" bg-red-500"><%= saludo %> </h1>
+
+<ul>
+    <% for( let i = 0; i < personas.length; i++ ) { %>
+        <li>
+            <div>
+                <p><%= personas[i].name %>  </p>
+                <% if (personas[i].age>18) { %>
+                 <p class="text-green-500 font-bold text-lg">Puedes entrar...</p>
+                 <% } else { %>
+                    <p class="text-red-500 font-bold text-lg">No puedes entrar...</p>
+                <% } %>
+            </div>
+        </li>
+    <% } %>
+</li>
