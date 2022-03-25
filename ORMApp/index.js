@@ -3,6 +3,7 @@ const express = require("express")
 const morgan = require("morgan")
 const expressLayouts = require('express-ejs-layouts')
 const { port } = require("./config")
+const {connection} = require("./config/database")
 
 const app = express()
 
@@ -19,6 +20,9 @@ app.use(express.static(path.join(__dirname,"static")))
 // Usando view engine
 app.set("view engine","ejs")
 app.set('layout', './layouts/base')
+
+// Test connection
+connection()
 
 app.get("/",function(req,res){
     res.render("index",{
