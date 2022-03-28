@@ -5,6 +5,8 @@ const expressLayouts = require('express-ejs-layouts')
 const { port } = require("./config")
 const {connection} = require("./config/database")
 
+const db = require("./models/index")
+
 const app = express()
 
 // Usando registros con Morgan
@@ -24,7 +26,21 @@ app.set('layout', './layouts/base')
 // Test connection
 connection()
 
-app.get("/",function(req,res){
+app.get("/",async function(req,res){
+
+    let result = await db.User.create({
+        name:"Tzuzul Code",
+        username:"tzuzulcode",
+        email:"mail@tzuzulcode.com",
+        birthday:"1998-05-10",
+        password:"12345",
+        profilePic:"https://bestprofilepictures.com/wp-content/uploads/2021/04/Cool-Profile-Picture.jpg",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+    
+      console.log(result)
+
     res.render("index",{
         saludo:"Hola, personas",
         personas:[
