@@ -2,16 +2,17 @@ const path = require("path")
 const express = require("express")
 const morgan = require("morgan")
 const expressLayouts = require('express-ejs-layouts')
-const { port } = require("./config")
+const { port,secret } = require("./config")
 const {connection} = require("./config/database")
+const session = require("express-session")
 
-const db = require("./models/index")
+//Importando rutas
+const auth = require("./routes/auth")
 
 const app = express()
 
 // Usando registros con Morgan
 app.use(morgan("dev"))
-
 
 //Definiendo middleware layouts
 app.use(expressLayouts)
@@ -23,24 +24,26 @@ app.use(express.static(path.join(__dirname,"static")))
 app.set("view engine","ejs")
 app.set('layout', './layouts/base')
 
+//Definiendo la sesión
+app.use(session({
+    secret:secret,
+    resave:false,
+    saveUninitialized:false
+}))
+
+//Middleware de urlencoded
+app.use(express.urlencoded({
+    extended:true
+}))
+
 // Test connection
 connection()
 
+//Utilizando rutas
+app.use("/auth",auth)
+
 app.get("/",async function(req,res){
-
-    let result = await db.User.create({
-        name:"Tzuzul Code",
-        username:"tzuzulcode",
-        email:"mail@tzuzulcode.com",
-        birthday:"1998-05-10",
-        password:"12345",
-        profilePic:"https://bestprofilepictures.com/wp-content/uploads/2021/04/Cool-Profile-Picture.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })
-    
-      console.log(result)
-
+    console.log(req.session)
     res.render("index",{
         saludo:"Hola, personas",
         personas:[
