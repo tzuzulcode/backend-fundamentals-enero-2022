@@ -1,6 +1,7 @@
 const path = require("path")
 const express = require("express")
 const morgan = require("morgan")
+const flash = require("connect-flash")
 const expressLayouts = require('express-ejs-layouts')
 const { port,secret } = require("./config")
 const {connection} = require("./config/database")
@@ -36,6 +37,9 @@ app.use(express.urlencoded({
     extended:true
 }))
 
+//Definiendo midd para flash messages
+app.use(flash())
+
 // Test connection
 connection()
 
@@ -65,6 +69,16 @@ app.get("/",async function(req,res){
             }
         ]
     })
+})
+
+app.get("/flash",(req,res)=>{
+    req.flash("exito","Completamente redireccionado")
+    
+    res.redirect("/pagina")
+})
+
+app.get("/pagina",(req,res)=>{
+    return res.json({message:req.flash("exito")})
 })
 
 app.listen(port,()=>{

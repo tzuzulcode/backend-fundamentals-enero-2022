@@ -2,7 +2,11 @@ const db = require("../models/index")
 
 class AuthController{
     getLoginView(req,res){
-        return res.render("login",{formCSS:true})
+        const status = req.flash("status")
+        return res.render("login",{status:{
+            show:status.length>0,
+            messages:status
+        }})
     }
 
     getSignUpView(req,res){
@@ -42,8 +46,8 @@ class AuthController{
         try{
             //try intenta ejecutar codigo que posiblemente lance una excepcion
             const newUser = await db.User.create(req.body)
-            console.log(newUser)
-            return res.redirect("/")
+            req.flash("status",["Usuario registrado exitosamente","Por favor inicia sesión"])
+            return res.redirect("/auth/login")
         }catch(error){
             //Entra aquí si se lanza una excepcion
             return res.render("signup")
