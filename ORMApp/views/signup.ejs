@@ -5,5 +5,14 @@
     <input name="profilePic" type="text" placeholder="Profile pic...">
     <input name="email" type="email" placeholder="Email...">
     <input name="password" type="password" placeholder="Password...">
+    <input name="passwordRepeated" type="password" placeholder="Repeat Password...">
     <button>Enviar</button>
 </form>
+
+<% if (isError) { %>
+    <ul>
+        <% errors.forEach(error => { %>
+            <li><%= error %> </li>
+        <% }) %>
+    </ul>
+<% } %>

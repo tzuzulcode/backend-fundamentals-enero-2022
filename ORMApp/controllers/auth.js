@@ -10,7 +10,7 @@ class AuthController{
     }
 
     getSignUpView(req,res){
-        return res.render("signup",{formCSS:true})
+        return res.render("signup",{isError:false})
     }
 
     logOut(req,res){
@@ -42,16 +42,47 @@ class AuthController{
     }
 
     async signUp(req,res){
+        const validation = this.validate(req.body)
+        if(!validation.isError){
+            try{
+                //try intenta ejecutar codigo que posiblemente lance una excepcion
+                const newUser = await db.User.create(req.body)
+                req.flash("status",["Usuario registrado exitosamente","Por favor inicia sesión"])
+                return res.redirect("/auth/login")
+            }catch(error){
+                // const errors = error.errors.map((e)=>{
+                //     if(e.type==="unique violation"){
+                //         return `El ${e.path} '${e.value}' ya esta en uso` 
+                //     }
 
-        try{
-            //try intenta ejecutar codigo que posiblemente lance una excepcion
-            const newUser = await db.User.create(req.body)
-            req.flash("status",["Usuario registrado exitosamente","Por favor inicia sesión"])
-            return res.redirect("/auth/login")
-        }catch(error){
-            //Entra aquí si se lanza una excepcion
-            return res.render("signup")
+                //     return e.message
+                // })
+                const errors = error.errors.map( e => e.type==="unique violation"?
+                    `El ${e.path} '${e.value}' ya esta en uso`:
+                    e.message
+                )
+                //Entra aquí si se lanza una excepcion
+                return res.render("signup",{
+                    isError:true,
+                    errors:errors
+                })
+            }
+        }else{
+            return res.render("signup",validation)
         }
+    }
+
+    validate(userData){
+        let result = {isError:false,errors:[]}
+        if(!(userData.name && userData.username && userData.email && userData.password && userData.passwordRepeated)){
+            result.isError = true
+            result.errors.push("Rellena todos los campos")
+        }
+        if(userData.password!==userData.passwordRepeated){
+            result.isError = true
+            result.errors.push("Las contraseñas no coinciden")
+        }
+        return result
     }
 }
 
