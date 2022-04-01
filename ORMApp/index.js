@@ -2,10 +2,12 @@ const path = require("path")
 const express = require("express")
 const morgan = require("morgan")
 const flash = require("connect-flash")
+const csrf = require("csurf")
 const expressLayouts = require('express-ejs-layouts')
 const { port,secret } = require("./config")
 const {connection} = require("./config/database")
 const session = require("express-session")
+
 
 //Importando rutas
 const auth = require("./routes/auth")
@@ -32,10 +34,14 @@ app.use(session({
     saveUninitialized:false
 }))
 
+
 //Middleware de urlencoded
 app.use(express.urlencoded({
     extended:true
 }))
+
+//Usando token scrf. Tiene que ir despues de express-session y urlencoded
+app.use(csrf())
 
 //Definiendo midd para flash messages
 app.use(flash())

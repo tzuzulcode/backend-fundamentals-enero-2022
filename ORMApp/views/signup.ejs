@@ -1,18 +1,15 @@
-<form action="/auth/signup" method="post">
-    <input name="name" type="text" placeholder="Name...">
-    <input name="username" type="text" placeholder="Username...">
-    <input name="date" type="date">
-    <input name="profilePic" type="text" placeholder="Profile pic...">
-    <input name="email" type="email" placeholder="Email...">
-    <input name="password" type="password" placeholder="Password...">
-    <input name="passwordRepeated" type="password" placeholder="Repeat Password...">
-    <button>Enviar</button>
-</form>
-
-<% if (isError) { %>
-    <ul>
-        <% errors.forEach(error => { %>
-            <li><%= error %> </li>
-        <% }) %>
-    </ul>
-<% } %>
+<div class=" w-1/2 mx-auto mt-20">
+    <h1 class="text-4xl font-bold mb-10">Registro</h1>
+    <form class="flex flex-col" action="/auth/signup" method="post">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="name" type="text" placeholder="Name...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="username" type="text" placeholder="Username...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="date" type="date">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="profilePic" type="text" placeholder="Profile pic...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="email" type="email" placeholder="Email...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="password" type="password" placeholder="Password...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="passwordRepeated" type="password" placeholder="Repeat Password...">
+        <button class="bg-sky-200 text-sky-900 p-2 rounded">Enviar</button>
+    </form>
+    
+    <%- include("./components/authError")%>
+</div>

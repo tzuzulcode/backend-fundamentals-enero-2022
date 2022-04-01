@@ -1,12 +1,18 @@
 const db = require("../models/index")
-
+const UserController = require("./users")
 class AuthController{
+
     getLoginView(req,res){
+        const token = req.csrfToken()
         const status = req.flash("status")
-        return res.render("login",{status:{
-            show:status.length>0,
-            messages:status
-        }})
+        return res.render("login",{
+            status:{
+                show:status.length>0,
+                messages:status
+            },
+            csrfToken:token
+            // isError:false
+        })
     }
 
     getSignUpView(req,res){
@@ -19,12 +25,14 @@ class AuthController{
     }
 
     async logIn(req,res){
+        
         const credenciales = req.body
-        const userData = await db.User.findOne({
-            where:{
-                email:credenciales.email
-            }
-        })
+        const userData = await UserController.findUser(credenciales.email)
+        // const userData = await db.User.findOne({
+        //     where:{
+        //         email:credenciales.email
+        //     }
+        // })
 
         if(userData){
             const user = userData.dataValues
@@ -37,7 +45,11 @@ class AuthController{
             
         }
 
-        return res.render("login")
+        return res.render("login",{
+            isError:true,
+            errors:["Credenciales incorrectas, favor de verificar"],
+            csrfToken:req.csrfToken()
+        })
         
     }
 

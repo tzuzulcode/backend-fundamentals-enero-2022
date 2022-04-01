@@ -1,4 +1,4 @@
-<% if (status.show) { %>
+<% if (typeof status !== "undefined" && status.show) { %>
     <aside class="absolute top-10 right-10 w-1/5">
         <% status.messages.forEach(message => { %>
             <div class="bg-white shadow-md my-5 p-3">
@@ -7,8 +7,15 @@
         <% }) %>
     </aside>
 <% } %>
-<form action="/auth/login" method="post">
-    <input name="email" type="email" placeholder="Email...">
-    <input name="password" type="password" placeholder="Password...">
-    <button>Enviar</button>
-</form>
+<div class=" w-1/2 mx-auto mt-20">
+    <h1 class="text-4xl font-bold mb-10">Iniciar sesión</h1>
+    <form class="flex flex-col" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="email" type="email" placeholder="Email...">
+        <input class="p-2 border border-gray-300 mb-5 rounded" name="password" type="password" placeholder="Password...">
+        <button class="bg-sky-200 text-sky-900 p-2 rounded">Enviar</button>
+    </form>
+</div>
+
+
+<%- include("./components/authError")%>
