@@ -11,6 +11,7 @@ const session = require("express-session")
 
 //Importando rutas
 const auth = require("./routes/auth")
+const chats = require("./routes/chats")
 
 const app = express()
 
@@ -51,6 +52,7 @@ connection()
 
 //Utilizando rutas
 app.use("/auth",auth)
+app.use("/chats",chats)
 
 app.get("/",async function(req,res){
     console.log(req.session)
