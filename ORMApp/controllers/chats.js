@@ -1,7 +1,26 @@
+const db = require("../models/index")
 class ChatController{
-    getChats(req,res){
-        console.log(req.session)
-        return res.json(["Chat1","Chat2","Chat3"])
+    async getChats(req,res){
+        const chats = await db.Messages.findAll({
+            include:db.Users,
+            where:{
+                idReceiver:11
+            }
+        })
+
+        console.log(chats)
+
+        return res.json(chats)
+    }
+
+    async createMessage(req,res){
+        const message = await db.Messages.create({
+            idSender:11,
+            idReceiver:11,
+            message:"Hola"
+        })
+
+        return res.json(message)
     }
 }
 
