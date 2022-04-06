@@ -12,6 +12,8 @@ const session = require("express-session")
 //Importando rutas
 const auth = require("./routes/auth")
 const chats = require("./routes/chats")
+const { verifyNoSession, verifyAdmin } = require("./middleware/verifySession")
+const addSessionToTemplate = require("./middleware/addSessionToTemplate")
 
 const app = express()
 
@@ -35,6 +37,8 @@ app.use(session({
     saveUninitialized:false
 }))
 
+app.use(addSessionToTemplate)
+
 
 //Middleware de urlencoded
 app.use(express.urlencoded({
@@ -51,8 +55,10 @@ app.use(flash())
 connection()
 
 //Utilizando rutas
+app.use("/auth",verifyNoSession)
 app.use("/auth",auth)
 app.use("/chats",chats)
+app.use("/admin",verifyAdmin)
 
 app.get("/",async function(req,res){
     console.log(req.session)
@@ -87,6 +93,14 @@ app.get("/flash",(req,res)=>{
 
 app.get("/pagina",(req,res)=>{
     return res.json({message:req.flash("exito")})
+})
+
+app.get("/notAllowed",(req,res)=>{
+    return res.render("notAllowed")
+})
+
+app.all("*",(req,res)=>{
+    return res.render("notFound")
 })
 
 app.listen(port,()=>{
