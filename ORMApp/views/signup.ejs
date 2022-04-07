@@ -1,6 +1,7 @@
 <div class=" w-1/2 mx-auto mt-20">
     <h1 class="text-4xl font-bold mb-10">Registro</h1>
     <form class="flex flex-col" action="/auth/signup" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input class="p-2 border border-gray-300 mb-5 rounded" name="name" type="text" placeholder="Name...">
         <input class="p-2 border border-gray-300 mb-5 rounded" name="username" type="text" placeholder="Username...">
         <input class="p-2 border border-gray-300 mb-5 rounded" name="date" type="date">

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.belongsToMany(models.User,{as: "sender",foreignKey:"idSender",through:"Messages"})
-      User.belongsToMany(models.User,{as: "receiver",foreignKey:"idReceiver",through:"Messages"})
+      User.belongsToMany(models.User,{as: "receiver",foreignKey:"id",through:"Messages"})
     }
   }
   User.init({

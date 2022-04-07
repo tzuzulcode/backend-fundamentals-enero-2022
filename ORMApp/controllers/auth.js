@@ -16,7 +16,8 @@ class AuthController{
     }
 
     getSignUpView(req,res){
-        return res.render("signup",{isError:false})
+        const token = req.csrfToken()
+        return res.render("signup",{isError:false,csrfToken:token})
     }
 
     logOut(req,res){

@@ -1,21 +1,35 @@
 const db = require("../models/index")
 class ChatController{
+    
     async getChats(req,res){
-        const chats = await db.Messages.findAll({
-            include:db.Users,
-            where:{
-                idReceiver:11
-            }
+        console.log(db.Messages.associations)
+        console.log(db.User.associations)
+        // const chats = await db.Messages.findAll({
+        //     include:[{
+        //         association:db.Messages.associations.sender
+        //     }],
+        //     where:{
+        //         idReceiver:11
+        //     }
+        // })
+
+        // console.log(chats)
+
+        const users = await db.User.findAll({
+            include:[{
+                model:db.User,
+                as:"sender"
+            }]
         })
 
-        console.log(chats)
+        console.log(users);
 
-        return res.json(chats)
+        return res.json([])
     }
 
     async createMessage(req,res){
         const message = await db.Messages.create({
-            idSender:11,
+            idSender:35,
             idReceiver:11,
             message:"Hola"
         })
